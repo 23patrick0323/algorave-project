@@ -1,0 +1,90 @@
+/* Only two colours. Inverting just swaps them. */
+:root {
+  --bg: #000;
+  --text: #fff;
+  --muted: #8a8a8a;
+}
+
+body.inverted {
+  --bg: #fff;
+  --text: #000;
+  --muted: #777;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  transition: background 0.6s ease, color 0.6s ease;
+}
+
+/* The canvas sits behind everything and fills the screen */
+#pixi-container {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+/* text content goes on top of the canvas */
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto 0 8vw;
+  padding: 0 1.5rem 5rem 0;
+  /* let mouse events pass through to the page */
+  pointer-events: none;
+}
+main img { pointer-events: auto; }
+
+.hero {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 4rem;
+}
+
+/*headline typography style*/
+h1 {
+  font-weight: 700;
+  font-size: clamp(2.5rem, 9vw, 5.5rem);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin: 0 0 1.5rem;
+}
+
+/*headline2 typography style*/
+h2 {
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0;
+  margin: 0 0 1rem;
+}
+
+.tagline { margin: 0 0 0.25rem; }
+.hint, .caption, footer { color: var(--muted); font-size: 0.875rem; }
+.hint { margin: 0; }
+
+/* thin line above each section, which divides them */
+section {
+  border-top: 1px solid var(--text);
+  padding: 1.5rem 0 3rem;
+}
+
+section p { max-width: 60ch; margin: 0 0 1rem; }
+
+section img {
+  display: block;
+ width: 100%;
+height: auto;
+filter: grayscale(1) contrast(1.1);
+margin: 1.5rem 0 0.5rem;
+}
+
+:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--name of the website-->
+  <title>I saw you enter Final Project</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- PixiJS canvas gets added to this div by script.js -->
+  <div id="pixi-container" aria-hidden="true"></div>
+
+  <main>
+    <!-- intro text and name -->
+    <header class="hero">
+      <h1>Dmytro Parinov</h1>
+      <p class="tagline">IT, Media and Design, Södertörn University</p>
+ <p class="hint">Move. Click. Press a key.</p>
+    </header>
+
+
+    <!-- about me section-->
+    <section id="about">
+      <h2>About</h2>
+   <p>
+        As a kid, I loved building with LEGO. Now that I'm older, I build
+    websites and interactive things, and I'm still building, just with
+    code instead of bricks. I still love LEGO.
+
+      </p>
+    </section>
+
+    <!-- our project section -->
+    <section id="project">
+      <h2>Final project: I Saw You Enter</h2>
+      <p>
+        I Saw You Enter is an interactive installation about the feeling of
+    walking into a club and sensing that all eyes are on you. Step into a hallway 
+    of microphones and speakers, experience the sounds from MAX MSP by Otto Ekerman and 
+    enjoy the visuals from TouchDesigner by Dmytro Parinov. In a world of cameras, 
+    social media and information that spreads in seconds, many of us
+    fear our digital footprint. We hold back: we don't dance, we don't laugh,
+    we don't express ourselves. We want you to feel that tension in your body,
+    because you can't hide forever. We saw you enter.       </p>
+
+    <!-- image of our project, we will add later :D-->
+  <img src="https://placehold.co/900x480/111111/ffffff?text=Project+image" alt="Placeholder image for my final project">
+      <p class="caption">Placeholder image.</p>
+    </section>
+
+    <!-- credits for my amazing partner Otto <3 -->
+    <section id="team">
+      <h2>Team</h2>
+      <p>Made together with Otto Ekerman for the Algorave.</p>
+    </section>
+
+    <footer>
+      <p>HTML, CSS, JavaScript, PixiJS.</p>
+    </footer>
+  </main>
+
+  <!-- PixiJS from a CDN (pinned version) -->
+  <script src="https://cdn.jsdelivr.net/npm/pixi.js@8.6.6/dist/pixi.min.js"></script>
+  <!-- my own script, loaded after Pixi so PIXI exists -->
+  <script src="script.js"></script>
+</body>
+</html>
