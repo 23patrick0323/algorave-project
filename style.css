@@ -110,7 +110,11 @@ section img {
 /* ---------- Video ---------- */
 
 .media {
-  margin: 1.5rem 0 2rem;
+  --mw: min(80vw, 1100px);                    /* width of the video: 80% of the screen, but never more than 1100px */
+  position: relative;
+  width: var(--mw);
+  left: calc(50vw - 8vw - var(--mw) / 2);     /* moves it to the middle of the screen */
+  margin: 2rem 0 3rem;
 }
 
 main video {
@@ -120,8 +124,8 @@ main video {
   aspect-ratio: 16 / 9;   /* keeps a visible black box even before the video loads */
   object-fit: contain;
   background: #000;
+  filter: grayscale(1) contrast(1.1);   /* makes the video black and white, same as the pictures */
 }
-
 
 /* ---------- Scattered picture gallery ---------- */
 
