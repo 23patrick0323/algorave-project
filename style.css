@@ -21,6 +21,7 @@ body {
   font-size: 16px;
   line-height: 1.55;
   transition: background 0.6s ease, color 0.6s ease;
+  overflow-x: hidden;   /* stops the full-width lines from creating a sideways scroll */
 }
 
 /* The canvas sits behind everything and fills the screen */
@@ -40,7 +41,10 @@ main {
   /* let mouse events pass through to the page */
   pointer-events: none;
 }
-main img { pointer-events: auto; }
+
+/* pictures and video must still react to the mouse */
+main img,
+main video { pointer-events: auto; }
 
 .hero {
   min-height: 90vh;
@@ -71,20 +75,136 @@ h2 {
 .hint, .caption, footer { color: var(--muted); font-size: 0.875rem; }
 .hint { margin: 0; }
 
-/* thin line above each section, which divides them */
+/* each section gets a thin line above it, which divides them */
 section {
-  border-top: 1px solid var(--text);
+  position: relative;
   padding: 1.5rem 0 3rem;
+}
+
+/* the line above each section: centered on the page with space on both sides, and semi-transparent */
+section::before {
+  --line-margin: 4vw;                              /* space between the line and each screen edge */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(var(--line-margin) - 8vw);            /* -8vw cancels the left margin of main */
+  width: calc(100vw - 2 * var(--line-margin));
+  height: 1px;
+  background: var(--text);
+  opacity: 0.3;                                    /* 1 = solid, 0 = invisible */
 }
 
 section p { max-width: 60ch; margin: 0 0 1rem; }
 
 section img {
   display: block;
- width: 100%;
-height: auto;
-filter: grayscale(1) contrast(1.1);
-margin: 1.5rem 0 0.5rem;
+  width: 100%;
+  height: auto;
+  filter: grayscale(1) contrast(1.1);
+  margin: 1.5rem 0 0.5rem;
 }
 
 :focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+
+
+/* ---------- Video ---------- */
+
+.media {
+  margin: 1.5rem 0 2rem;
+}
+
+main video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;   /* keeps a visible black box even before the video loads */
+  object-fit: contain;
+  background: #000;
+}
+
+
+/* ---------- Scattered picture gallery ---------- */
+
+.gallery {
+  margin-top: 2rem;
+}
+
+.gallery figure {
+  margin: 0;
+  pointer-events: auto;   /* needed for the hover effect */
+}
+
+.gallery img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  margin: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* small screens: pictures stack, lean and overlap a little */
+.gallery figure {
+  position: relative;
+  width: 80%;
+  margin-top: -1.5rem;
+  transform: rotate(var(--r, 0deg));
+}
+
+.gallery figure:first-child { margin-top: 0; }
+.gallery figure:nth-child(even) { margin-left: auto; }
+
+/* the angle of each picture */
+.gallery figure:nth-child(1) { --r: -4deg; }
+.gallery figure:nth-child(2) { --r: 5deg; }
+.gallery figure:nth-child(3) { --r: -3deg; }
+.gallery figure:nth-child(4) { --r: 4deg; }
+.gallery figure:nth-child(5) { --r: -6deg; }
+
+/* big screens: the gallery is as wide as the page and centered on it,
+   and the pictures are placed freely inside it */
+@media (min-width: 701px) {
+  .gallery {
+    --gw: min(92vw, 1500px);          /* width of the gallery area */
+    position: relative;
+    width: var(--gw);
+    left: calc(50vw - 8vw - var(--gw) / 2);   /* moves it to the middle of the screen */
+    aspect-ratio: 16 / 10;
+    margin-bottom: 3rem;
+  }
+
+  .gallery figure {
+    position: absolute;
+    margin: 0;
+    transition: transform 0.3s ease;
+  }
+
+  /* width, left and top are percentages of the gallery area */
+  .gallery figure:nth-child(1) { width: 40%; left: 4%;  top: 4%;  z-index: 2; }
+  .gallery figure:nth-child(2) { width: 34%; left: 33%; top: 14%; z-index: 3; }
+  .gallery figure:nth-child(3) { width: 38%; left: 58%; top: 0%;  z-index: 1; }
+  .gallery figure:nth-child(4) { width: 42%; left: 12%; top: 44%; z-index: 4; }
+  .gallery figure:nth-child(5) { width: 36%; left: 50%; top: 48%; z-index: 5; }
+
+  /* hover: picture straightens, grows a little and comes to the front */
+  .gallery figure:hover {
+    transform: rotate(0deg) scale(1.06);
+    z-index: 10;
+  }
+
+  /* caption appears over the picture on hover */
+  .gallery figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 0.5rem 0.75rem;
+    background: rgba(0, 0, 0, 0.75);
+    color: var(--text);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .gallery figure:hover figcaption { opacity: 1; }
+}
